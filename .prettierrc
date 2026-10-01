@@ -1,6 +1,9 @@
 {
   "printWidth": 100,
   "singleQuote": true,
+  "tabWidth": 2,
+  "htmlWhitespaceSensitivity": "ignore",
+  "plugins": ["prettier-plugin-tailwindcss"],
   "overrides": [
     {
       "files": "*.html",

@@ -1,0 +1,228 @@
+<div class="min-h-screen bg-[#0a0a0a]">
+  <div class="relative overflow-hidden py-20 pt-40 md:pt-48">
+    <div class="absolute inset-0 bg-[#0a0a0a]"></div>
+    <div
+      class="absolute inset-0 bg-[linear-gradient(rgba(38,38,38,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(38,38,38,0.5)_1px,transparent_1px)] bg-[size:60px_60px]"
+    ></div>
+    <div class="absolute inset-0">
+      <div class="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl"></div>
+      <div
+        class="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-yellow-500/5 blur-3xl"
+      ></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+      <span
+        class="mb-6 inline-flex items-center gap-2 rounded-4xl border border-orange-500/15 bg-orange-500/10 px-5 py-1 text-orange-500"
+      >
+        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-500"></span>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+          ></path>
+        </svg>
+        مدونتنا
+      </span>
+      <h1 class="mb-6 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+        استكشف
+        <span class="gradient-text">مقالاتنا</span>
+      </h1>
+      <p class="mx-auto max-w-2xl text-xl text-neutral-400">
+        اكتشف الدروس والرؤى وأفضل الممارسات للتطوير الحديث
+      </p>
+    </div>
+  </div>
+  <div class="sticky top-20 z-40 border-b border-[#262626] bg-[#0a0a0a]/90 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+        <div class="relative w-full md:w-80">
+          <input
+            #searchBox
+            type="text"
+            placeholder="ابحث في المقالات..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearch()"
+            class="w-full rounded-2xl border border-white/10 bg-[#161616] px-5 py-3 pr-12 text-white outline-none focus:border-orange-500"
+          />
+          <svg
+            class="absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 text-neutral-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+        <div class="flex flex-wrap justify-center gap-2">
+          <button
+            (click)="filterByCategory('جميع المقالات')"
+            [class.bg-orange-600]="activeCategory === 'جميع المقالات'"
+            [class.text-white]="activeCategory === 'جميع المقالات'"
+            [class.bg-[#161616]]="activeCategory !== 'جميع المقالات'"
+            [class.text-neutral-400]="activeCategory !== 'جميع المقالات'"
+            class="cursor-pointer rounded-xl border border-[#262626] bg-[#161616] px-4 py-2 text-sm font-medium text-neutral-400 transition-all duration-300 hover:border-orange-500/30"
+          >
+            جميع المقالات
+          </button>
+          @for (cate of categoryData; track cate.name) {
+            <button
+              (click)="filterByCategory(cate.name)"
+              [class.bg-orange-600]="activeCategory === cate.name"
+              [class.text-white]="activeCategory === cate.name"
+              [class.bg-[#161616]]="activeCategory !== cate.name"
+              [class.text-neutral-400]="activeCategory !== cate.name"
+              class="cursor-pointer rounded-xl border border-[#262626] bg-[#161616] px-4 py-2 text-sm font-medium text-neutral-400 transition-all duration-300 hover:border-orange-500/30"
+            >
+              {{ cate.name }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mx-auto max-w-7xl scroll-mt-[146px] px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8 flex items-center justify-between">
+      <p class="text-neutral-400">
+        عرض
+        <span class="font-bold text-white">{{ filteredPosts.length }}</span>
+        مقالات
+        @if (activeCategory !== 'جميع المقالات') {
+          <span class="text-orange-500"> في "{{ activeCategory }}"</span>
+        }
+      </p>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center rounded-xl border border-[#262626] bg-[#161616] p-1">
+          <button
+            class="cursor-pointer rounded-lg p-2 transition-all duration-300 hover:text-white"
+            (click)="setViewMode('grid')"
+            [class.bg-orange-500]="viewMode === 'grid'"
+            [class.text-white]="viewMode === 'grid'"
+            [class.text-neutral-400]="viewMode !== 'grid'"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+              ></path>
+            </svg>
+          </button>
+          <button
+            class="cursor-pointer rounded-lg p-2 transition-all duration-300 hover:text-white"
+            (click)="setViewMode('list')"
+            [class.bg-orange-500]="viewMode === 'list'"
+            [class.text-white]="viewMode === 'list'"
+            [class.text-neutral-400]="viewMode !== 'list'"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <button
+          (click)="filterByCategory('جميع المقالات')"
+          [class.hidden]="activeCategory === 'جميع المقالات'"
+          class="flex items-center cursor-pointer gap-1 text-sm text-neutral-500 transition-colors hover:text-orange-500"
+        >
+          <svg class="h-4 w-4" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+          مسح الفلاتر
+        </button>
+      </div>
+    </div>
+    <div
+      [class.grid]="true"
+      [class.gap-8]="viewMode === 'grid'"
+      [class.gap-4]="viewMode === 'list'"
+      [class.md:grid-cols-2]="viewMode === 'grid'"
+      [class.lg:grid-cols-3]="viewMode === 'grid'"
+      [class.grid-cols-1]="viewMode === 'list'"
+    >
+      @for (items of visiblePosts; track items.id) {
+        <app-card [cardData]="items" [viewMode]="viewMode"></app-card>
+      } @empty {
+        <p class="col-span-full py-12 text-center text-neutral-400">لا توجد نتائج مطابقة لبحثك</p>
+      }
+    </div>
+    <div class="mt-12 flex items-center justify-center gap-2">
+      <button
+        [disabled]="currentPage === 1"
+        [class.bg-[#0a0a0a]]="currentPage === 1"
+        [class.bg-[#161616]]="currentPage !== 1"
+        [class.cursor-not-allowed]="currentPage === 1"
+        [class.cursor-pointer]="currentPage !== 1"
+        [class.hidden]="filteredPosts.length == 0"
+        (click)="prevPage()"
+        class="rounded-xl border border-[#262626] p-3 text-neutral-600 transition-all duration-300 hover:text-white"
+      >
+        <svg class="h-5 w-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </button>
+      <div class="flex items-center gap-1">
+        @for (page of pages; track page) {
+          <button
+            (click)="goToPage(page)"
+            [class.bg-gradient-to-r]="page === currentPage"
+            [class.from-orange-500]="page === currentPage"
+            [class.to-orange-600]="page === currentPage"
+            [class.text-white]="page === currentPage"
+            class="h-11 min-w-[44px] cursor-pointer rounded-xl border border-[#262626] bg-[#161616] text-sm font-medium text-neutral-400 transition-all duration-300 hover:border-orange-500/50 hover:text-white"
+          >
+            {{ page }}
+          </button>
+        }
+      </div>
+      <button
+        [disabled]="currentPage === totalPages"
+        [class.bg-[#0a0a0a]]="currentPage === totalPages"
+        [class.bg-[#161616]]="currentPage !== totalPages"
+        [class.cursor-not-allowed]="currentPage === totalPages"
+        [class.cursor-pointer]="currentPage !== totalPages"
+        [class.hidden]="filteredPosts.length == 0"
+        (click)="nextPage()"
+        class="rounded-xl border border-[#262626] p-3 text-neutral-600 transition-all duration-300 hover:border-orange-500/50 hover:text-white"
+      >
+        <svg class="h-5 w-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <p [class.hidden]="filteredPosts.length == 0" class="mt-4 text-center text-sm text-neutral-500">
+      صفحة {{ currentPage }} من {{ totalPages }}
+    </p>
+  </div>
+</div>

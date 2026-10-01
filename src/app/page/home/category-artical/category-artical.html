@@ -1,0 +1,65 @@
+<section class="relative border-y border-[#262626] bg-[#111111] py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center">
+      <div class="inline-flex items-center gap-2 mb-8 py-2 px-4 rounded-4xl bg-orange-500/10 border border-orange-500/20">
+        <span class="relative inline-flex rounded-full animate-pulse h-1.5 w-1.5 bg-orange-500"></span>
+        <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+        </span>
+        <span class="text-sm font-medium text-orange-500 ms-1.5">التصنيفات</span>
+      </div>
+      <h2 class="pb-2 text-white text-4xl font-bold">استكشف حسب الموضوع</h2>
+      <p class="text-neutral-400 text-xl mx-auto max-w-lg">اعثر على محتوى مصمم حسب اهتماماتك</p>
+    </div>
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+      @for (Category of Categorys; track Category.name) {
+        <a
+          class="group relative block overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-orange-500/30"
+          routerLink="/blog"
+          [queryParams]="{ category: Category.name}"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-orange-500 to-yellow-500 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          ></div>
+          <div class="relative z-10">
+            <div
+              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 transition-colors duration-300 group-hover:border-transparent group-hover:bg-white/20"
+            >
+              <i
+                class="{{Category.icon}} text-xl text-orange-500 transition-colors duration-300 group-hover:text-white"
+              ></i>
+            </div>
+            <h3
+              class="mb-1 text-lg font-bold text-white transition-colors duration-300 group-hover:text-white"
+            >
+              {{Category.name}}
+            </h3>
+            <p
+              class="text-sm text-neutral-500 transition-colors duration-300 group-hover:text-white/80"
+            >
+              {{Category.count}} مقالة
+            </p>
+            <div
+              class="absolute top-6 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#262626] opacity-0 transition-all duration-300 group-hover:bg-white/20 group-hover:opacity-100"
+            >
+              <svg
+                class="h-4 w-4 rotate-180 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>

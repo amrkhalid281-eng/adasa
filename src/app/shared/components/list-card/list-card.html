@@ -1,0 +1,81 @@
+<article
+  class="group overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] transition-all duration-500 hover:border-orange-500/30"
+>
+  <a class="flex flex-col md:flex-row" [routerLink]="['/article',listCardData.id]">
+    <div class="relative h-52 w-full flex-shrink-0 overflow-hidden md:h-auto md:w-72 lg:w-80">
+      <img
+        [alt]="listCardData.title"
+        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        [src]="listCardData.image"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-l from-[#161616]/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      ></div>
+    </div>
+    <div class="flex flex-1 flex-col justify-center p-6">
+      <div class="mb-3 flex flex-wrap items-center gap-3">
+        <span
+          class="rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-500"
+        >
+          {{ listCardData.category }}
+        </span>
+        <span class="flex items-center gap-1 text-sm text-neutral-500">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          {{ listCardData.readTime }}
+        </span>
+        <span class="flex items-center gap-1 text-sm text-neutral-500">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            ></path>
+          </svg>
+          {{ listCardData.date }}
+        </span>
+      </div>
+      <h2
+        class="mb-3 line-clamp-2 text-xl font-bold text-white transition-colors duration-300 group-hover:text-orange-500 lg:text-2xl"
+      >
+        {{ listCardData.title }}
+      </h2>
+      <p class="mb-4 line-clamp-2 leading-relaxed text-neutral-400">
+        {{ listCardData.excerpt }}
+      </p>
+      <div class="mt-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img
+            [alt]="listCardData.author.name"
+            class="h-10 w-10 rounded-full object-cover ring-2 ring-[#262626]"
+            [src]="listCardData.author.avatar"
+          />
+          <div>
+            <p class="text-sm font-semibold text-white">{{ listCardData.author.name }}</p>
+            <p class="text-xs text-neutral-500">{{ listCardData.author.role }}</p>
+          </div>
+        </div>
+        <span
+          class="hidden items-center gap-2 text-sm font-semibold text-orange-500 transition-all duration-300 group-hover:gap-3 sm:inline-flex"
+        >
+          اقرأ المقال
+          <svg class="h-5 w-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            ></path>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

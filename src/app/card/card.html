@@ -1,0 +1,5 @@
+@if (viewMode === 'grid') {
+  <app-grid-card [gridCardData]="cardData"></app-grid-card>
+} @else {
+  <app-list-card [listCardData]="cardData"></app-list-card>
+}
