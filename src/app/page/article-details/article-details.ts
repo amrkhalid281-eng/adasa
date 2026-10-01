@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataServices } from '../../data-service/data-services';
 import { Post } from '../../post';
@@ -15,7 +15,7 @@ interface ContentSection {
   templateUrl: './article-details.html',
   styleUrl: './article-details.css',
 })
-export class ArticleDetails {
+export class ArticleDetails implements OnInit{
   private readonly data = inject(DataServices);
   private readonly route = inject(ActivatedRoute);
 
@@ -48,21 +48,25 @@ export class ArticleDetails {
 
   constructor() {
     this.dataArticle = this.data.articlePosts.posts;
+  }
 
-    const id = this.route.snapshot.paramMap.get('id');
-    this.articleId = Number(id);
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      this.articleId = Number(id);
 
-    const article = this.dataArticle.find((item) => item.id === this.articleId);
+      const article = this.dataArticle.find((item) => item.id === this.articleId);
 
-    if (article) {
-    const parsed = this.parseContent(article.content);
-    this.intro = parsed.intro;
-    this.sections = parsed.sections;
+      if (article) {
+        const parsed = this.parseContent(article.content);
+        this.intro = parsed.intro;
+        this.sections = parsed.sections;
 
-    this.relatedPosts = this.dataArticle
-      .filter((item) => item.category === article.category && item.id !== article.id)
-      .slice(0, 3);
-    }
+        this.relatedPosts = this.dataArticle
+          .filter((item) => item.category === article.category && item.id !== article.id)
+          .slice(0, 3);
+      }
+    });
   }
 
   private parseContent(content: string): { intro: string; sections: ContentSection[] } {
